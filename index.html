@@ -31,10 +31,10 @@
 
         setInterval(()=>{
             const date = new Date();
-console.log(date.getSeconds())
-            $('.clock .hours').text(date.getHours());
-            $('.clock .minutes').text(date.getMinutes());
-            $('.clock .seconds').text(date.getSeconds());
+
+            $('.clock .hours').text(("0"+date.getHours()).slice(-2));
+            $('.clock .minutes').text(("0"+date.getMinutes()).slice(-2));
+            $('.clock .seconds').text(("0"+date.getSeconds()).slice(-2));
         },1000)
     });
 </script>
