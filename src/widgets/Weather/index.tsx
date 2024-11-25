@@ -13,35 +13,41 @@ const Weather = () => {
     const [weatherData, setWeatherData] = useState<any>({});
 
     useEffect(() => {
-        const previousWeatherData: any = weatherDataStore.getData();
+        const updateWeatherDataInterval = setInterval(() => {
+            const previousWeatherData: any = weatherDataStore.getData();
 
-        console.log("previousWeatherData");
-        console.log(previousWeatherData);
+            console.log("previousWeatherData");
+            console.log(previousWeatherData);
 
-        if (previousWeatherData && ((Date.now() - previousWeatherData?.setTime) / 1000 < 600)) {
-            setWeatherData(previousWeatherData.rawData);
+            if (previousWeatherData && ((Date.now() - previousWeatherData?.setTime) / 1000 < 600)) {
+                setWeatherData(previousWeatherData.rawData);
 
-            return;
-        }
+                return;
+            }
 
-        const config = configProvider.getConfig();
+            const config = configProvider.getConfig();
 
 
-        if (!config) {
-            return;
-        }
+            if (!config) {
+                return;
+            }
 
-        fetch(config.apiUrl)
-            .then((res) => {
-                return res.json();
-            })
-            .then((data) => {
-                console.log("-=-=-=-=-=-=-=-=-=-=-11112222");
-                console.log(data);
-                weatherDataStore.saveData(data);
+            fetch(config.apiUrl)
+                .then((res) => {
+                    return res.json();
+                })
+                .then((data) => {
+                    console.log("-=-=-=-=-=-=-=-=-=-=-11112222");
+                    console.log(data);
+                    weatherDataStore.saveData(data);
 
-                setWeatherData(data);
-            })
+                    setWeatherData(data);
+                })
+        },(1000*60));
+
+        return (() => {
+            return clearInterval(updateWeatherDataInterval)
+        });
     }, [])
 
     return (
