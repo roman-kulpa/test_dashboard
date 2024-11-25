@@ -57,8 +57,12 @@ const Weather = () => {
                 setIsConfigVisible(true)
             }}
         >
-            Weather
-            {weatherData?.main?.temp && <div className={styles.temperature}>{weatherData?.main?.temp}</div>}
+            <div>
+                <div>current:</div>
+                {weatherData?.main?.temp && <div className={styles.temperature}>temp: {weatherData?.main?.temp}</div>}
+                {weatherData?.main?.humidity && <div className={styles.humidity}>humidity: {weatherData?.main?.humidity}</div>}
+            </div>
+
             {isConfigVisible && (<div className={classNames(styles.configWindow)}>
                 <div style={{fontSize: "30px", color: "#fff"}} onClick={(event) => {
                     event.stopPropagation()
