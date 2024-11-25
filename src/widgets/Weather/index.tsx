@@ -18,7 +18,7 @@ const Weather = () => {
         console.log("previousWeatherData");
         console.log(previousWeatherData);
 
-        if (previousWeatherData && ((Date.now() - previousWeatherData?.setTime) / 1000 < 60)) {
+        if (previousWeatherData && ((Date.now() - previousWeatherData?.setTime) / 1000 < 600)) {
             setWeatherData(previousWeatherData.rawData);
 
             return;
