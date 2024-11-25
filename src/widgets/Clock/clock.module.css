@@ -1,0 +1,22 @@
+.clockWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.clock {
+    display: flex;
+    flex-direction: row;
+    color: #fff;
+
+    & > div {
+        font-size: 150px;
+        margin: 5px;
+    }
+}
+
+.date {
+    color: #fff;
+    font-size: 40px;
+}

@@ -9,19 +9,3 @@
     justify-content: center;
     overflow: hidden;
 }
-
-.clock {
-    display: flex;
-    flex-direction: row;
-    color: #fff;
-
-    & > div {
-        font-size: 150px;
-        margin: 5px;
-    }
-}
-
-.date {
-    color: #fff;
-    font-size: 40px;
-}
