@@ -12,38 +12,42 @@ const Weather = () => {
     const [newApiKey, setNewApiKey] = useState('');
     const [weatherData, setWeatherData] = useState<any>({});
 
+    const getWeatherData = () => {
+        const previousWeatherData: any = weatherDataStore.getData();
+
+        console.log("previousWeatherData");
+        console.log(previousWeatherData);
+
+        if (previousWeatherData && ((Date.now() - previousWeatherData?.setTime) / 1000 < 600)) {
+            setWeatherData(previousWeatherData.rawData);
+
+            return;
+        }
+
+        const config = configProvider.getConfig();
+
+
+        if (!config) {
+            return;
+        }
+
+        fetch(config.apiUrl)
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                console.log("-=-=-=-=-=-=-=-=-=-=-11112222");
+                console.log(data);
+                weatherDataStore.saveData(data);
+
+                setWeatherData(data);
+            })
+    };
+
     useEffect(() => {
-        const updateWeatherDataInterval = setInterval(() => {
-            const previousWeatherData: any = weatherDataStore.getData();
-
-            console.log("previousWeatherData");
-            console.log(previousWeatherData);
-
-            if (previousWeatherData && ((Date.now() - previousWeatherData?.setTime) / 1000 < 600)) {
-                setWeatherData(previousWeatherData.rawData);
-
-                return;
-            }
-
-            const config = configProvider.getConfig();
-
-
-            if (!config) {
-                return;
-            }
-
-            fetch(config.apiUrl)
-                .then((res) => {
-                    return res.json();
-                })
-                .then((data) => {
-                    console.log("-=-=-=-=-=-=-=-=-=-=-11112222");
-                    console.log(data);
-                    weatherDataStore.saveData(data);
-
-                    setWeatherData(data);
-                })
-        },(1000*60));
+        console.log("+++++++");
+        getWeatherData();
+        const updateWeatherDataInterval = setInterval(getWeatherData, (1000 * 60));
 
         return (() => {
             return clearInterval(updateWeatherDataInterval)
@@ -60,7 +64,8 @@ const Weather = () => {
             <div>
                 <div>current:</div>
                 {weatherData?.main?.temp && <div className={styles.temperature}>temp: {weatherData?.main?.temp}</div>}
-                {weatherData?.main?.humidity && <div className={styles.humidity}>humidity: {weatherData?.main?.humidity}</div>}
+                {weatherData?.main?.humidity &&
+                    <div className={styles.humidity}>humidity: {weatherData?.main?.humidity}</div>}
             </div>
 
             {isConfigVisible && (<div className={classNames(styles.configWindow)}>
