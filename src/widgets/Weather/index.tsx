@@ -15,8 +15,11 @@ const Weather = () => {
     useEffect(() => {
         const previousWeatherData: any = weatherDataStore.getData();
 
+        console.log("previousWeatherData");
+        console.log(previousWeatherData);
+
         if (previousWeatherData && ((Date.now() - previousWeatherData?.setTime) / 1000 < 60)) {
-            setWeatherData(previousWeatherData);
+            setWeatherData(previousWeatherData.rawData);
 
             return;
         }
