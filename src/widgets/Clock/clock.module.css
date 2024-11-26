@@ -3,6 +3,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-sizing: border-box;
 }
 
 .clock {
@@ -10,8 +13,9 @@
     flex-direction: row;
     color: #fff;
 
+
     & > div {
-        font-size: 150px;
+        font-size: 120px;
         margin: 5px;
     }
 }

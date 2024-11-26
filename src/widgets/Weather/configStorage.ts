@@ -9,6 +9,9 @@ export default class WeatherConfig {
         }
 
          //id for Krakow
+
+         //https://api.openweathermap.org/data/2.5/forecast?id=3094802&units=metric&appid=
+         //https://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=5&units=metric&appid=
         return {
             apiUrl: `https://api.openweathermap.org/data/2.5/weather?id=3094802&units=metric&appid=${key}`
         }

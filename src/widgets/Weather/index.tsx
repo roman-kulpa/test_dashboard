@@ -54,6 +54,8 @@ const Weather = () => {
         });
     }, [])
 
+    const wetherConditions = weatherData?.weather?.length?weatherData?.weather[0]:null;
+
     return (
         <div
             className={styles.weatherWrapper}
@@ -61,11 +63,23 @@ const Weather = () => {
                 setIsConfigVisible(true)
             }}
         >
-            <div>
-                <div>current:</div>
-                {weatherData?.main?.temp && <div className={styles.temperature}>temp: {weatherData?.main?.temp}</div>}
-                {weatherData?.main?.humidity &&
-                    <div className={styles.humidity}>humidity: {weatherData?.main?.humidity}</div>}
+            <div className={styles.currentWeather}>
+                {/*<div>current:</div>*/}
+                {weatherData?.main?.temp &&
+                    <div className={styles.temperature}>{weatherData?.main?.temp.toFixed(1)}&deg;C</div>}
+                {weatherData?.main?.feels_like && <div className={styles.temperatureFeals}>Feels
+                    like: {weatherData?.main?.feels_like.toFixed(1)}&deg;C</div>}
+                {weatherData?.main?.temp_min &&
+                    <div className={styles.tempMin}>min: {weatherData?.main?.temp_min.toFixed(1)}&deg;C</div>}
+                {weatherData?.main?.temp_max &&
+                    <div className={styles.tempMax}>max: {weatherData?.main?.temp_max.toFixed(1)}&deg;C</div>}
+                {weatherData?.main?.humidity && <div className={styles.humidity}>{weatherData?.main?.humidity}%</div>}
+                {wetherConditions && (<div className={styles.weatherConditions}>
+                    <div>
+                        <img alt="wether icon" src={`https://openweathermap.org/img/wn/${wetherConditions.icon}@2x.png`}></img>
+                    </div>
+                    <div>{wetherConditions.main} ({wetherConditions.description})</div>
+                </div>)}
             </div>
 
             {isConfigVisible && (<div className={classNames(styles.configWindow)}>
