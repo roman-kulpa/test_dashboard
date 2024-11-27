@@ -6,6 +6,7 @@
     border: 2px solid black;
     border-radius: 10px;
     box-sizing: border-box;
+    padding: 5px;
 }
 
 .clock {
@@ -15,7 +16,8 @@
 
 
     & > div {
-        font-size: 120px;
+        font-size: 100px;
+        line-height: 80px;
         margin: 5px;
     }
 }

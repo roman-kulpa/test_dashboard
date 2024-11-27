@@ -8,12 +8,13 @@ export default class WeatherConfig {
             return false;
         }
 
-         //id for Krakow
+        //id for Krakow
+        //https://api.openweathermap.org/data/2.5/forecast?id=3094802&units=metric&appid=
+        //https://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=5&units=metric&appid=
+        //https://api.openweathermap.org/data/2.5/weather?id=3094802&units=metric&appid=${key}`
 
-         //https://api.openweathermap.org/data/2.5/forecast?id=3094802&units=metric&appid=
-         //https://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=5&units=metric&appid=
         return {
-            apiUrl: `https://api.openweathermap.org/data/2.5/weather?id=3094802&units=metric&appid=${key}`
+            apiUrl: `https://api.weatherapi.com/v1/forecast.json?q=50.0379009%2C19.99330&days=3&key=${key}`
         }
     }
 

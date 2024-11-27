@@ -18,7 +18,7 @@ const Weather = () => {
         console.log("previousWeatherData");
         console.log(previousWeatherData);
 
-        if (previousWeatherData && ((Date.now() - previousWeatherData?.setTime) / 1000 < 600)) {
+        if (previousWeatherData && ((Date.now() - previousWeatherData?.setTime) / 1000 < 60 * 10)) {
             setWeatherData(previousWeatherData.rawData);
 
             return;
@@ -54,7 +54,7 @@ const Weather = () => {
         });
     }, [])
 
-    const wetherConditions = weatherData?.weather?.length?weatherData?.weather[0]:null;
+    const wetherConditions = weatherData?.condition?.length ? weatherData?.weather[0] : null;
 
     return (
         <div
@@ -64,21 +64,30 @@ const Weather = () => {
             }}
         >
             <div className={styles.currentWeather}>
-                {/*<div>current:</div>*/}
-                {weatherData?.main?.temp &&
-                    <div className={styles.temperature}>{weatherData?.main?.temp.toFixed(1)}&deg;C</div>}
-                {weatherData?.main?.feels_like && <div className={styles.temperatureFeals}>Feels
-                    like: {weatherData?.main?.feels_like.toFixed(1)}&deg;C</div>}
-                {weatherData?.main?.temp_min &&
-                    <div className={styles.tempMin}>min: {weatherData?.main?.temp_min.toFixed(1)}&deg;C</div>}
-                {weatherData?.main?.temp_max &&
-                    <div className={styles.tempMax}>max: {weatherData?.main?.temp_max.toFixed(1)}&deg;C</div>}
-                {weatherData?.main?.humidity && <div className={styles.humidity}>{weatherData?.main?.humidity}%</div>}
-                {wetherConditions && (<div className={styles.weatherConditions}>
-                    <div>
-                        <img alt="wether icon" src={`https://openweathermap.org/img/wn/${wetherConditions.icon}@2x.png`}></img>
+                <div className={styles.generalData}>
+                    {weatherData?.current?.temp_c &&
+                        <div className={styles.temperature}>{weatherData?.current?.temp_c}&deg;C</div>}
+                    {weatherData?.current?.feelslike_c && <div className={styles.temperatureFeals}>Feels
+                        like: {weatherData?.current?.feelslike_c}&deg;C</div>}
+
+                    <div className={styles.temMinMax}>
+                        {weatherData?.forecast?.forecastday[0].day.mintemp_c &&
+                            <div
+                                className={styles.tempMin}>min: {weatherData?.forecast?.forecastday[0].day.mintemp_c}&deg;C</div>}
+                        {weatherData?.forecast?.forecastday[0].day.maxtemp_c &&
+                            <div
+                                className={styles.tempMax}>max: {weatherData?.forecast?.forecastday[0].day.maxtemp_c}&deg;C</div>}
                     </div>
-                    <div>{wetherConditions.main} ({wetherConditions.description})</div>
+
+                    {weatherData?.current?.humidity &&
+                        <div className={styles.humidity}>{weatherData?.current?.humidity}%</div>}
+                </div>
+
+                {weatherData?.current?.condition && (<div className={styles.weatherConditions}>
+                    <div>
+                        <img alt="wether icon" src={weatherData.current.condition.icon.replace('64x64','128x128')}></img>
+                    </div>
+                    <div>{weatherData.current.condition.text}</div>
                 </div>)}
             </div>
 
@@ -100,6 +109,7 @@ const Weather = () => {
                 <button style={{fontSize: "30px", color: "#fff"}} onClick={(event) => {
                     event.stopPropagation()
                     configProvider.setApiKey(newApiKey)
+                    getWeatherData()
                     setNewApiKey('')
                 }}>
                     Set
